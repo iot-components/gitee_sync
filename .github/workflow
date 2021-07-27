@@ -1,0 +1,21 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'
+
+name: Mirror GitHub Selected Repos to Gitee
+jobs:
+  run:
+  name: Run
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout source codes
+    uses: actions/checkout@v2
+  - name: Mirror Github to Gitee
+    uses: Yikun/hub-mirror-action@master
+    with:
+      src: github/iot-components
+      dst: gitee/iot-components
+      dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+      dst_token: ${{ secrets.GITEE_TOKEN }}
+      force_update: true
